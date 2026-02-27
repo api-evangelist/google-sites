@@ -1,0 +1,47 @@
+name: Google Sites API
+description: API for creating and managing Google Sites
+image: https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png
+created: 2024
+modified: 2024
+url: https://developers.google.com/sites
+specificationVersion: '0.18'
+apis:
+- name: Google Sites API
+  description: The Google Sites API allows developers to programmatically access and manage Google Sites content, including pages, lists, and attachments
+  image: https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png
+  humanURL: https://developers.google.com/sites
+  baseURL: https://sites.googleapis.com
+  tags:
+  - websites
+  - content management
+  - collaboration
+  - google workspace
+  properties:
+  - type: X-documentation
+    url: https://developers.google.com/sites/api/reference/rest
+  - type: X-openapi
+    url: https://sites.googleapis.com/$discovery/rest?version=v1
+  - type: X-authentication
+    url: https://developers.google.com/sites/api/guides/authentication
+  - type: X-rate-limits
+    url: https://developers.google.com/sites/api/limits
+  - type: X-terms-of-service
+    url: https://developers.google.com/terms
+  - type: X-support
+    url: https://developers.google.com/sites/api/support
+  - type: X-api-console
+    url: https://console.cloud.google.com/apis/library/sites.googleapis.com
+common:
+- type: X-portal
+  url: https://developers.google.com
+- type: X-privacy-policy
+  url: https://policies.google.com/privacy
+- type: X-status
+  url: https://status.cloud.google.com
+- type: X-blog
+  url: https://developers.googleblog.com
+maintainers:
+- FN: Google
+  email: support@google.com
+  url: https://www.google.com
+include: []
