@@ -1,7 +1,9 @@
 aid: google-sites
 name: Google Sites
-description: API for creating and managing Google Sites
-image: https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png
+description: >-
+  API for creating and managing Google Sites.
+image: 
+  https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png
 url: https://developers.google.com/sites
 created: '2024-01-01'
 modified: '2026-03-16'
@@ -14,8 +16,11 @@ tags:
   - Google Workspace
 apis:
   - name: Google Sites API
-    description: The Google Sites API allows developers to programmatically access and manage Google Sites content, including pages, lists, and attachments
-    image: https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png
+    description: >-
+      The Google Sites API allows developers to programmatically access and manage
+      Google Sites content, including pages, lists, and attachments.
+    image: 
+      https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png
     humanURL: https://developers.google.com/sites
     baseURL: https://sites.googleapis.com
     tags:
