@@ -36,6 +36,10 @@ apis:
       - type: GettingStarted
         url: https://developers.google.com/sites
 common:
+  - type: VulnerabilityDisclosure
+    url: security/google-sites-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/google-sites-domain-security.yml
   - type: Portal
     url: https://developers.google.com
   - type: Documentation
