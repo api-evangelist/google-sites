@@ -2,6 +2,18 @@ aid: google-sites
 name: Google Sites
 description: >-
   API for creating and managing Google Sites.
+accessModel:
+  pricing: freemium
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Freemium
+  confidence: medium
+  source:
+  - plans
+  generated: '2026-07-22'
+  method: derived
 image: https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png
 url: https://developers.google.com/sites
 created: '2024-01-01'
