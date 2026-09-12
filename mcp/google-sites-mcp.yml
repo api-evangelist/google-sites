@@ -1,0 +1,110 @@
+generated: '2026-09-12'
+method: derived
+source: >-
+  https://developers.google.com/workspace/sites/docs/1.0/reference (documented feed
+  operations); registry search of github.com/googleapis and github.com/googleworkspace
+  for a published MCP server, 2026-09-12
+status: candidate
+note: >-
+  NO MCP SERVER EXISTS for Google Sites. Searched Google's own organisations: the only
+  MCP servers googleapis publishes are mcp-toolbox (databases), its four language SDKs,
+  and gcloud-mcp - none touches Workspace or Sites. github.com/googleworkspace returned
+  no MCP repository. No hosted endpoint, no stdio package, no config snippet in the
+  Sites documentation. The tools below are DERIVED CANDIDATES: a faithful mapping of
+  the five documented GData feeds onto MCP tool shapes so the gap is legible. They are
+  not implemented, not callable, and no endpoint is asserted.
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: oauth
+  verified: searched
+caveat: >-
+  Even if someone built this server, the underlying API is deprecated and reaches only
+  classic Google Sites - not the rebuilt Sites that has been the only version users can
+  create since 2016-11-22. An agent cannot act on a modern Google Site through any
+  published Google API.
+candidate_tools:
+  - name: list_sites
+    description: List the classic Google Sites a user owns or can view in a domain.
+    backing: GET /feeds/site/{domainName}
+    inputs: [domainName, include-all-sites, with-mappings, max-results, start-index]
+    consequence: read
+  - name: get_site
+    description: Fetch one classic site entry, optionally with its web address mappings.
+    backing: GET /feeds/site/{domainName}/{siteName}
+    inputs: [domainName, siteName, with-mappings]
+    consequence: read
+  - name: create_site
+    description: Create a new classic site, or copy an existing one, on a Workspace domain.
+    backing: POST /feeds/site/{domainName}
+    inputs: [domainName, title, summary, theme, sourceSite]
+    consequence: write
+    note: Google Workspace domains only. No DELETE exists to undo this.
+  - name: update_site
+    description: Update a site's title, summary, theme or categories.
+    backing: PUT /feeds/site/{domainName}/{siteName}
+    inputs: [domainName, siteName, title, summary, theme, etag]
+    consequence: write
+  - name: list_content
+    description: >-
+      List page, attachment, comment and list-item entries in a site, filtered by kind,
+      parent, ancestor or path.
+    backing: GET /feeds/content/{domainName}/{siteName}
+    inputs: [domainName, siteName, kind, parent, ancestor, path, include-deleted, include-draft, q, max-results, start-index]
+    consequence: read
+  - name: create_content
+    description: Create a webpage, announcement, filecabinet, listpage, comment or attachment.
+    backing: POST /feeds/content/{domainName}/{siteName}
+    inputs: [domainName, siteName, kind, title, content, parent, pageName]
+    consequence: write
+    note: No idempotency key exists - a retried call creates a duplicate entry.
+  - name: update_content
+    description: Update an entry's title, HTML content or page path.
+    backing: PUT /feeds/content/{domainName}/{siteName}/{entryId}
+    inputs: [domainName, siteName, entryId, title, content, pageName, etag]
+    consequence: write
+  - name: delete_content
+    description: Delete a content entry.
+    backing: DELETE /feeds/content/{domainName}/{siteName}/{entryId}
+    inputs: [domainName, siteName, entryId, etag]
+    consequence: destructive
+    note: >-
+      No undelete operation. The entry remains visible via include-deleted=true and in
+      the revision feed, but the API publishes no way to restore it and no retention
+      window.
+  - name: list_revisions
+    description: List historical revisions of one content entry.
+    backing: GET /feeds/revision/{domainName}/{siteName}/{entryId}
+    inputs: [domainName, siteName, entryId]
+    consequence: read
+  - name: list_activity
+    description: List recent activity across a site.
+    backing: GET /feeds/activity/{domainName}/{siteName}
+    inputs: [domainName, siteName, max-results, start-index]
+    consequence: read
+  - name: list_acl
+    description: List the sharing permissions on a site.
+    backing: GET /feeds/acl/site/{domainName}/{siteName}
+    inputs: [domainName, siteName]
+    consequence: read
+  - name: share_site
+    description: Grant a user, group or domain a role on a site.
+    backing: POST /feeds/acl/site/{domainName}/{siteName}
+    inputs: [domainName, siteName, scopeType, scopeValue, role]
+    consequence: destructive
+    note: Reversible via DELETE on the resulting ACL entry.
+  - name: unshare_site
+    description: Revoke a sharing permission.
+    backing: DELETE /feeds/acl/site/{domainName}/{siteName}/{aclEntryId}
+    inputs: [domainName, siteName, aclEntryId, etag]
+    consequence: destructive
+auth_for_tools:
+  scheme: oauth2
+  scopes:
+    - https://sites.google.com/feeds/
+  note: >-
+    One coarse scope grants read AND write across all five feeds. An agent granted
+    read access is structurally also granted the ability to delete pages and change
+    who can see a site. See scopes/google-sites-scopes.yml.

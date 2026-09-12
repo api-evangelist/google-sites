@@ -1,0 +1,196 @@
+generated: '2026-09-12'
+method: searched
+source: >-
+  https://developers.google.com/workspace/sites/docs/1.0/developers_guide_protocol and
+  https://developers.google.com/workspace/sites/docs/1.0/reference
+note: >-
+  Cross-cutting runtime semantics for the Google Sites Data API, read from the API's
+  own protocol guide and reference guide. This is a Google Data (GData) v1.4 API -
+  Atom/AtomPub over HTTP, not JSON/REST - so several conventions that a modern REST
+  reader expects (JSON envelopes, Problem Details, RateLimit headers, idempotency
+  keys) simply do not exist here. Absences below are measured, not assumed.
+media_type:
+  request: application/atom+xml
+  response: application/atom+xml
+  json_supported: false
+  note: >-
+    All feeds and entries are Atom 1.0 documents with the GData, Sites
+    (http://schemas.google.com/sites/2008), ACL, OpenSearch and batch namespaces.
+    Attachments are transferred as raw media or as MIME multipart alongside the entry.
+auth:
+  style: oauth2-bearer
+  header: Authorization
+  scopes: scopes/google-sites-scopes.yml
+  detail: authentication/google-sites-authentication.yml
+versioning:
+  style: header
+  header: GData-Version
+  value: '1.4'
+  query_fallback: v=1.4
+  detail: lifecycle/google-sites-lifecycle.yml
+pagination:
+  style: opensearch-offset
+  params:
+    - name: start-index
+      description: 1-based index of the first result to return.
+    - name: max-results
+      description: Maximum number of entries to return in the feed.
+  response_fields:
+    - openSearch:startIndex
+    - openSearch:totalResults
+    - openSearch:itemsPerPage
+  next_link: 'link rel="next" type="application/atom+xml"'
+  cursor: false
+  note: >-
+    Offset paging. The feed carries a rel="next" link that already encodes the next
+    start-index, so a client can follow links rather than compute offsets.
+filtering:
+  params:
+    - name: q
+      description: Full-text query.
+    - name: updated-min
+      description: Lower bound on entry update time.
+    - name: updated-max
+      description: Upper bound on entry update time.
+    - name: published-min
+      description: Lower bound on publish time (content feed only).
+    - name: published-max
+      description: Upper bound on publish time (content feed only).
+    - name: kind
+      description: >-
+        Comma-separated content kinds - announcement, announcementspage, attachment,
+        comment, filecabinet, listitem, listpage, webpage, webattachment, template.
+    - name: parent
+      description: Only entries whose parent is the given entry ID.
+    - name: ancestor
+      description: Only entries under the given ancestor entry ID, at any depth.
+    - name: path
+      description: Content under a page path, e.g. path=/path/to/page.
+    - name: include-deleted
+      description: Include deleted entries. Default false.
+    - name: include-draft
+      description: Include draft entries (owner/author only). Default false.
+    - name: include-all-sites
+      description: Site feed - list every site the user can view in the Workspace domain.
+    - name: with-mappings
+      description: Site feed - include web address mappings in each site entry.
+field_expansion:
+  supported: false
+  note: No sparse-fieldset or expansion parameter is documented.
+metadata:
+  supported: true
+  mechanism: >-
+    Arbitrary site categories via <category scheme="http://schemas.google.com/sites/2008#tag">
+    on a site entry; page-level metadata lives in Sites-namespaced elements.
+request_id_tracing:
+  supported: false
+  note: No request-id or correlation header is documented for this API.
+concurrency:
+  style: etag
+  mechanism: >-
+    Every <feed> and <entry> carries a gd:etag attribute. Writes take an If-Match
+    header (or the gd:etag attribute on the submitted entry); If-Match:* forces the
+    write regardless of concurrent modification. Conditional reads use If-None-Match
+    and are answered with HTTP 304 Not Modified or HTTP 412 Precondition Failed when
+    the entity is unchanged.
+  headers:
+    - If-Match
+    - If-None-Match
+    - ETag
+idempotency:
+  coverage: none
+  key_header: null
+  scope: []
+  retention: null
+  note: >-
+    The API publishes NO idempotency-key mechanism. No Idempotency-Key (or equivalent)
+    header appears anywhere in the protocol guide or reference guide. Replaying a POST
+    to the content feed or the site feed creates a second entry. The only replay
+    protection the API offers is optimistic concurrency on UPDATE and DELETE via
+    If-Match ETags, which prevents clobbering a concurrent change but does not make a
+    retried CREATE safe.
+  partial_mitigation:
+    mechanism: etag-if-match
+    applies_to:
+      - PUT /feeds/content/{domain}/{site}/{entryId}
+      - DELETE /feeds/content/{domain}/{site}/{entryId}
+      - PUT /feeds/site/{domain}/{site}
+      - PUT /feeds/acl/site/{domain}/{site}/{aclEntryId}
+      - DELETE /feeds/acl/site/{domain}/{site}/{aclEntryId}
+reversibility:
+  grade: documented
+  read_only: false
+  note: >-
+    Content deletion is soft - deleted entries remain retrievable through the content
+    feed with include-deleted=true, and the revision feed retains historical revisions
+    of content entries - so a delete is recoverable in principle. But the API
+    documents NO reversal operation and NO window: there is no undelete, restore,
+    untrash or rollback verb in any of the five feeds, and no retention period is
+    stated anywhere in the protocol or reference guide. An agent can see that a page
+    was deleted; it cannot put it back through this API.
+  operations:
+    - write: DELETE /feeds/content/{domain}/{site}/{entryId}
+      reversal: null
+      recovery_signal: >-
+        GET /feeds/content/{domain}/{site}?include-deleted=true still returns the
+        entry, and the revision feed retains its history.
+      window: null
+      window_source: null
+    - write: POST /feeds/site/{domain} (create site)
+      reversal: null
+      window: null
+      note: >-
+        The site feed supports GET, POST and PUT only - no DELETE. A site created
+        through the API cannot be removed through the API.
+    - write: POST /feeds/acl/site/{domain}/{site} (grant sharing permission)
+      reversal: DELETE /feeds/acl/site/{domain}/{site}/{aclEntryId}
+      window: none-stated
+      note: >-
+        ACL grants are the one write with a true inverse operation in the same feed.
+        No window applies - a grant can be revoked at any time.
+  gaps:
+    - >-
+      No stated retention window for deleted content. Grading is capped at
+      `documented` for exactly this reason: a reversal path exists for ACLs and a
+      recovery signal exists for content, but no window is published, so an agent
+      cannot know how long it has to undo anything.
+dry_run:
+  supported: false
+  note: No preview, validate-only or dry-run mode is documented.
+batch:
+  supported: true
+  endpoint: 'POST {feed}/batch'
+  operations:
+    - query
+    - insert
+    - update
+    - delete
+  mechanism: >-
+    POST a batch feed to the rel="http://schemas.google.com/g/2005#batch" link on the
+    content feed. Each <entry> carries a <batch:operation type="..."/>; existing
+    entries are addressed by <id>, new entries by a caller-chosen <batch:id> which is
+    echoed in the response so the client can correlate results.
+  partial_failure: true
+  partial_failure_note: >-
+    "The server will perform as many of the requested changes as possible and return
+    status information that you can use to evaluate the success or failure of each
+    operation." A batch is not atomic.
+error_envelope:
+  format: gdata-xml
+  rfc9457: false
+  problem_json: false
+  detail: errors/google-sites-problem-types.yml
+  note: >-
+    Errors follow the generic Google Data APIs error model, not RFC 9457. The Sites
+    documentation publishes no error-code registry of its own.
+rate_limit_signal:
+  headers: []
+  documented: false
+  note: >-
+    No rate limit, quota, 429 or Retry-After signal appears anywhere in the Sites Data
+    API documentation. See rate-limits/google-sites-rate-limits.yml.
+webhooks:
+  supported: false
+  note: >-
+    No webhook, push-notification or change-subscription surface. The Activity feed is
+    a pollable change log, not a push channel.

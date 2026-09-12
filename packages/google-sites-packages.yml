@@ -1,0 +1,70 @@
+generated: '2026-09-12'
+method: searched
+source: >-
+  https://developers.google.com/workspace/sites/docs/developers_guide plus registry
+  metadata from pypi.org/pypi/gdata/json and search.maven.org, and repository metadata
+  from api.github.com
+note: >-
+  The Google Sites Data API has no dedicated SDK. Google publishes exactly two
+  first-party client libraries for it, and both are the GENERIC Google Data (GData)
+  client libraries - the Sites API is one of many GData services they wrap. The Sites
+  developer guide links only the Python and Java GData libraries; no JavaScript, Go,
+  .NET, Ruby, PHP or Rust client exists for this surface. Both libraries are
+  long-abandoned and their GitHub repositories are ARCHIVED: the Python library last
+  published to PyPI in 2013 and the Java core artifact last published to Maven Central
+  in 2012. This is the strongest decay evidence available for this API and it is
+  provider-published: the client libraries stopped shipping more than a decade before
+  the API's own deprecation banner went up.
+packages:
+  - language: python
+    registry: pypi
+    name: gdata
+    url: https://pypi.org/project/gdata/
+    install: pip install gdata
+    official: true
+    version: 2.0.18
+    published: '2013-06-14'
+    repository: https://github.com/google/gdata-python-client
+    repository_archived: true
+    repository_last_push: '2019-10-02'
+    scope: >-
+      Generic Google Data APIs Python client library. Carries the gdata.sites
+      service/client used by the Sites Data API Python guide.
+    note: >-
+      Latest release 2.0.18 (2013-06-14) read from pypi.org/pypi/gdata/json. Python 2
+      only - the Sites Python guide states it requires Python 2.2+. Source repository
+      google/gdata-python-client is archived (read-only) with its last push 2019-10-02.
+  - language: java
+    registry: maven
+    name: com.google.gdata:core
+    url: https://central.sonatype.com/artifact/com.google.gdata/core
+    install: "implementation 'com.google.gdata:core:1.47.1'"
+    official: true
+    version: 1.47.1
+    published: '2012-10-26'
+    repository: https://github.com/google/gdata-java-client
+    repository_archived: true
+    repository_last_push: '2026-01-05'
+    scope: >-
+      Generic Google Data APIs Java client library (com.google.gdata.client.sites.*).
+      The Sites Java guide targets this library.
+    note: >-
+      Latest version 1.47.1 with a Maven Central timestamp of 1351239833000 =
+      2012-10-26, read from search.maven.org/solrsearch. No per-service
+      gdata-sites-2.0 artifact is published to Maven Central (query returned
+      numFound: 0); the Sites classes ship inside the single core artifact. Source
+      repository google/gdata-java-client is archived (read-only).
+absent:
+  - registry: npm
+    note: No first-party JavaScript/TypeScript client for the Google Sites Data API.
+  - registry: nuget
+    note: No first-party .NET client; the legacy Google Data .NET library was retired.
+  - registry: rubygems
+    note: No first-party Ruby client.
+  - registry: crates.io
+    note: No first-party Rust client.
+  - registry: pkg.go.dev
+    note: No first-party Go client.
+  - registry: packagist
+    note: No first-party PHP client.
+official_count: 2

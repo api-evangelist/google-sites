@@ -1,91 +1,36 @@
-specification: API Commons Rate Limits
-specificationVersion: '0.1'
-schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+generated: '2026-09-12'
+method: searched
+source: >-
+  https://developers.google.com/workspace/sites/docs/1.0/developers_guide_protocol and
+  https://developers.google.com/workspace/sites/docs/1.0/reference
 provider: Google Sites
 providerId: google-sites
-created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-04'
-tags:
-  - Collaboration
-  - Content Management
-  - Google Workspace
-  - Websites
-  - Rate Limiting
-  - Quotas
-  - Throttling
-description: Machine-readable rate limit definitions for the Google Sites API surface. Captures per-tier
-  quotas, burst behavior, response signaling, and recovery semantics. Defaults are scaffold values to
-  be replaced with published provider limits.
-headers:
-  limit: X-RateLimit-Limit
-  remaining: X-RateLimit-Remaining
-  reset: X-RateLimit-Reset
-  retryAfter: Retry-After
-  policy: RateLimit-Policy
-responseCodes:
-  throttled: 429
-  quotaExceeded: 429
-  serviceUnavailable: 503
-limits:
-  - tier: free
-    name: Free Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 10
-    burst: 20
-    timeFrame: minute
-    applies:
-      - Google Sites API
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 1000
-    timeFrame: month
-    applies:
-      - Google Sites API
-  - tier: professional
-    name: Professional Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 100
-    burst: 200
-    timeFrame: minute
-    applies:
-      - Google Sites API
-  - tier: professional
-    name: Professional Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - Google Sites API
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
-    scope: contract
-    metric: requests_per_minute
-    limit: 1000
-    burst: 5000
-    timeFrame: minute
-    applies:
-      - Google Sites API
-policies:
-  - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
+limit_count: 0
+documented: false
+note: >-
+  HONEST ZERO. Google publishes no rate limits, quotas, throttling behaviour or
+  exhaustion signal for the Google Sites Data API. Full-text search of the API's
+  protocol guide and reference guide on 2026-09-12 found zero occurrences of "quota",
+  "rate limit", "429", "503" or "Retry-After". The API is not listed in the Google
+  Cloud console quota surface because it is not a Cloud/Discovery API - it is a legacy
+  GData service reached at sites.google.com/feeds. An integrator has no published
+  number to design against and no runtime header to back off on.
+  This file REPLACES a 2026-05-04 bulk-sweep scaffold that asserted invented
+  X-RateLimit-* headers and 10/100/1000 requests-per-minute free/professional/
+  enterprise tiers. None of that was ever published by Google.
+headers: []
+responseCodes: {}
+limits: []
+policies: []
+gaps:
+  - id: no-published-limits
+    detail: No per-key, per-account or per-endpoint limit is documented anywhere.
+  - id: no-runtime-signal
+    detail: >-
+      No RateLimit-* or X-RateLimit-* response headers and no documented Retry-After.
+      An agent cannot detect approaching exhaustion or learn how long to wait.
+  - id: no-exhaustion-status
+    detail: The status code returned on throttling is not documented.
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com

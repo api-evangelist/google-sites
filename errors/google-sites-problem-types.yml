@@ -1,0 +1,72 @@
+generated: '2026-09-12'
+method: searched
+source: >-
+  https://developers.google.com/workspace/sites/docs/1.0/developers_guide_protocol and
+  https://developers.google.com/workspace/sites/docs/1.0/reference
+format: gdata-xml
+rfc9457: false
+note: >-
+  The Google Sites Data API publishes NO error-code registry. There is no error
+  reference page, no numeric code list, and no Problem Details envelope. Only the HTTP
+  statuses below are named in the API's own documentation; each entry cites the exact
+  sentence that states it. Nothing here is inferred from generic REST convention -
+  statuses the API almost certainly returns (400, 401, 404, 500) are listed under
+  `undocumented` rather than invented into the catalog.
+envelope:
+  media_type: application/atom+xml
+  shape: >-
+    Generic Google Data APIs error response. The Sites documentation defers to the
+    Google Data APIs reference guide rather than defining its own shape.
+  reference: https://developers.google.com/gdata/docs/2.0/reference
+problem_types:
+  - status: 200
+    title: OK
+    context: delete
+    evidence: >-
+      "If the entry was deleted successfully, the server responds with an HTTP 200 OK."
+    source: https://developers.google.com/workspace/sites/docs/1.0/developers_guide_protocol
+  - status: 304
+    title: Not Modified
+    context: conditional-retrieval
+    meaning: >-
+      The If-None-Match ETag matched; the copy the client already holds is current.
+    remediation: Serve the cached representation. Do not re-fetch.
+    evidence: >-
+      "If the ETags match, then the item hasn't changed, and the server returns either
+      an HTTP 304 Not Modified status code or an HTTP 412 Precondition Failed status
+      code."
+    source: https://developers.google.com/workspace/sites/docs/1.0/developers_guide_protocol
+  - status: 412
+    title: Precondition Failed
+    context: conditional-retrieval, optimistic-concurrency
+    meaning: >-
+      On a conditional GET, an alternate signal that the held copy is up to date. On a
+      write with If-Match, the entry was modified by another client since it was
+      retrieved.
+    remediation: >-
+      Re-fetch the entry, read its fresh gd:etag, re-apply the change, and retry. Use
+      If-Match:* only when a last-writer-wins overwrite is genuinely intended.
+    evidence: >-
+      Same sentence as 304, plus "To assert your update doesn't overwrite another
+      client's changes, include the original entry's ETag value ... in an HTTP If-Match
+      header."
+    source: https://developers.google.com/workspace/sites/docs/1.0/developers_guide_protocol
+batch_errors:
+  partial_failure: true
+  note: >-
+    Batch requests return per-operation status inside the response feed rather than a
+    single HTTP status: "The server will perform as many of the requested changes as
+    possible and return status information that you can use to evaluate the success or
+    failure of each operation." Callers must inspect every entry in the batch
+    response; a 200 on the batch POST does not mean every operation succeeded.
+undocumented:
+  - >-
+    No 4xx catalogue. Authorization failures, malformed Atom payloads, missing
+    GData-Version headers, unknown site names and permission denials all return
+    statuses the Sites documentation never enumerates.
+  - >-
+    No rate-limit or quota error is documented - 429 and Retry-After do not appear
+    anywhere in the Sites Data API documentation.
+  - >-
+    No error taxonomy for the deprecation itself. The banner says the API "might stop
+    working at any time" without naming the status or body a caller will see when it does.

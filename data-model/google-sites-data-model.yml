@@ -1,0 +1,134 @@
+generated: '2026-09-12'
+method: derived
+source: >-
+  https://developers.google.com/workspace/sites/docs/1.0/reference and
+  https://developers.google.com/workspace/sites/docs/1.0/developers_guide_protocol
+note: >-
+  Derived from the published feed reference, not from a machine-readable spec - this
+  API has none. Entities are Atom entries in five feeds; relationships are the Atom
+  link relations and Sites-namespaced elements the reference documents.
+namespaces:
+  atom: http://www.w3.org/2005/Atom
+  sites: http://schemas.google.com/sites/2008
+  gd: http://schemas.google.com/g/2005
+  gAcl: http://schemas.google.com/acl/2007
+  batch: http://schemas.google.com/gdata/batch
+  openSearch: http://a9.com/-/spec/opensearch/1.1/
+  app: http://www.w3.org/2007/app
+entities:
+  - name: Site
+    feed: https://sites.google.com/feeds/site/{domainName}/[{siteName}]
+    methods: [GET, POST, PUT]
+    key: sites:siteName
+    fields:
+      - id
+      - title
+      - summary
+      - updated
+      - app:edited
+      - sites:siteName
+      - sites:theme
+      - category (scheme sites/2008#tag)
+      - gd:etag
+    note: >-
+      POST (create) and site copy are available only to Google Workspace domains. The
+      site feed has no DELETE.
+  - name: ContentEntry
+    feed: https://sites.google.com/feeds/content/{domainName}/{siteName}/[{contentEntryID}]
+    methods: [GET, POST, PUT, DELETE]
+    key: id
+    kinds:
+      - announcement
+      - announcementspage
+      - attachment
+      - comment
+      - filecabinet
+      - listitem
+      - listpage
+      - webpage
+      - webattachment
+      - template
+    fields:
+      - id
+      - title
+      - content
+      - updated
+      - published
+      - author
+      - category (scheme g/2005#kind)
+      - sites:pageName
+      - gd:etag
+    note: >-
+      The one feed that may be readable anonymously, depending on the site's published
+      settings. Supports include-deleted and include-draft.
+  - name: Revision
+    feed: https://sites.google.com/feeds/revision/{domainName}/{siteName}/{contentEntryID}/[{revisionEntryID}]
+    methods: [GET]
+    key: id
+    note: Historical revisions of one content entry. Read-only, always authenticated.
+  - name: Activity
+    feed: https://sites.google.com/feeds/activity/{domainName}/{siteName}/[{activityEntryID}]
+    methods: [GET]
+    key: id
+    fields:
+      - id
+      - title
+      - summary (xhtml)
+      - updated
+      - author
+      - category (deletion, edit, creation and other activity kinds)
+    note: Site-wide change log. Read-only, always authenticated.
+  - name: AclEntry
+    feed: https://sites.google.com/feeds/acl/site/{domainName}/{siteName}/[{aclEntryID}]
+    methods: [GET, POST, PUT, DELETE]
+    key: id
+    note: Sharing permissions for one site.
+  - name: WebAddressMapping
+    parent: Site
+    access: GET /feeds/site/{domainName}?with-mappings=true
+    note: >-
+      Custom domains mapped onto a site. Not a feed of its own - returned inside site
+      entries when with-mappings=true.
+relationships:
+  - from: Site
+    to: ContentEntry
+    type: has_many
+    via: 'content feed scoped by {domainName}/{siteName}'
+  - from: Site
+    to: AclEntry
+    type: has_many
+    via: 'link rel="http://schemas.google.com/acl/2007#accessControlList"'
+  - from: Site
+    to: Activity
+    type: has_many
+    via: 'activity feed scoped by {domainName}/{siteName}'
+  - from: Site
+    to: WebAddressMapping
+    type: has_many
+    via: with-mappings=true on the site entry
+  - from: ContentEntry
+    to: ContentEntry
+    type: has_many
+    via: parent / ancestor query parameters (page hierarchy)
+  - from: ContentEntry
+    to: Revision
+    type: has_many
+    via: revision feed keyed by contentEntryID
+  - from: Activity
+    to: Revision
+    type: has_one
+    via: 'link rel="http://schemas.google.com/sites/2008#revision"'
+  - from: Activity
+    to: ContentEntry
+    type: has_one
+    via: 'link rel="http://schemas.google.com/sites/2008#current"'
+  - from: ContentEntry
+    to: ContentEntry
+    type: has_many
+    via: 'attachment / comment kinds hung off a parent page entry'
+identifiers:
+  style: uri
+  note: >-
+    Entry ids are full feed URIs, e.g.
+    https://sites.google.com/feeds/content/site/{siteName}/{entryId}. Numeric entry
+    ids (e.g. 0123456789) are what the parent and ancestor query parameters take.

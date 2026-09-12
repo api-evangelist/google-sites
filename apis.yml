@@ -1,7 +1,20 @@
 aid: google-sites
 name: Google Sites
 description: >-
-  API for creating and managing Google Sites.
+  Google Sites is Google's no-code website builder, bundled with Google Workspace and
+  available at no cost to consumer Google Accounts. Its only public programmatic surface
+  is the Google Sites Data API, a Google Data (GData) v1.4 Atom/XML API served from
+  https://sites.google.com/feeds/ across five feeds — Site, Content, Revision, Activity
+  and ACL — that list and create sites, read and write pages, announcements, file
+  cabinets, list pages and attachments, walk revision history and activity, and manage
+  sharing permissions. Google marks the API DEPRECATED on every documentation page and
+  states it "might stop working at any time"; critically, it reaches only classic Google
+  Sites and cannot touch the rebuilt Sites launched on 2016-11-22, which is the only
+  version a user can create today. Google publishes no OpenAPI or discovery document for
+  it, no replacement API for new Sites, no webhooks, no rate limits and no MCP server.
+  Authorization is OAuth 2.0 with one coarse read-and-write scope. The two first-party
+  client libraries are the generic GData Python and Java libraries, both archived, last
+  published in 2013 and 2012.
 deliveryModel:
   model: saas
   open_source: false
@@ -26,9 +39,9 @@ accessModel:
   generated: '2026-07-22'
   method: derived
 image: https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png
-url: https://developers.google.com/sites
+url: https://developers.google.com/workspace/sites
 created: '2024-01-01'
-modified: '2026-04-28'
+modified: '2026-09-12'
 specificationVersion: '0.23'
 type: Index
 tags:
@@ -36,49 +49,145 @@ tags:
   - Content Management
   - Google Workspace
   - Websites
+  - Website Builder
+  - CMS
+  - Publishing
+  - Productivity
+  - Deprecated APIs
+  - GData
 apis:
-  - name: Google Sites API
+  - name: Google Sites Data API
     description: >-
-      The Google Sites API allows developers to programmatically access and manage
-      Google Sites content, including pages, lists, and attachments.
+      The Google Sites Data API is a Google Data (GData) v1.4 Atom/XML API for classic
+      Google Sites. Five feeds — Site, Content, Revision, Activity and ACL — let a client
+      list, create, copy and rename sites (create and copy are Google Workspace domains
+      only), create, update and delete webpages, announcements, file cabinets, list pages,
+      list items, comments and attachments, read revision history and site activity, and
+      manage sharing permissions. Every request carries a GData-Version: 1.4 header;
+      entries carry gd:etag for optimistic concurrency via If-Match / If-None-Match;
+      batch requests bundle query, insert, update and delete operations non-atomically.
+      DEPRECATED: it cannot access the rebuilt Google Sites launched 2016-11-22, and
+      Google publishes no successor API.
     image: https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png
-    humanURL: https://developers.google.com/sites
-    baseURL: https://sites.googleapis.com
+    humanURL: https://developers.google.com/workspace/sites
+    baseURL: https://sites.google.com/feeds
     tags:
       - Collaboration
       - Content Management
       - Google Workspace
       - Websites
+      - Website Builder
+      - Deprecated APIs
+      - GData
     properties:
       - type: Documentation
-        url: https://developers.google.com/sites/api/reference/rest
-      - type: OpenAPI
-        url: https://sites.googleapis.com/$discovery/rest?version=v1
-      - type: Authentication
-        url: https://developers.google.com/sites/api/guides/authentication
+        url: https://developers.google.com/workspace/sites/docs/developers_guide
+      - type: APIReference
+        url: https://developers.google.com/workspace/sites/docs/1.0/reference
       - type: GettingStarted
-        url: https://developers.google.com/sites
+        url: https://developers.google.com/workspace/sites/docs/1.0/developers_guide_protocol
+      - type: Authentication
+        url: authentication/google-sites-authentication.yml
+      - type: OAuthScopes
+        url: scopes/google-sites-scopes.yml
+      - type: Conventions
+        url: conventions/google-sites-conventions.yml
+      - type: DataModel
+        url: data-model/google-sites-data-model.yml
+      - type: ErrorCatalog
+        url: errors/google-sites-problem-types.yml
+      - type: Lifecycle
+        url: lifecycle/google-sites-lifecycle.yml
+      - type: RateLimits
+        url: rate-limits/google-sites-rate-limits.yml
 common:
-  - type: VulnerabilityDisclosure
-    url: security/google-sites-vulnerability-disclosure.yml
-  - type: DomainSecurity
-    url: security/google-sites-domain-security.yml
-  - type: Portal
-    url: https://developers.google.com
+  - type: Website
+    url: https://www.google.com/
+  - type: DeveloperPortal
+    url: https://developers.google.com/workspace
   - type: Documentation
-    url: https://developers.google.com/sites/api/reference/rest
-  - type: Authentication
-    url: https://developers.google.com/sites/api/guides/authentication
+    url: https://developers.google.com/workspace/sites/docs/developers_guide
+  - type: APIReference
+    url: https://developers.google.com/workspace/sites/docs/1.0/reference
+  - type: GettingStarted
+    url: https://developers.google.com/workspace/guides/get-started
+  - type: Support
+    url: https://developers.google.com/workspace/sites/support
+  - type: Blog
+    url: https://developers.googleblog.com
+  - type: GitHubOrganization
+    url: https://github.com/googleworkspace
+  - type: Pricing
+    url: https://workspace.google.com/pricing
+  - type: SignUp
+    url: https://accounts.google.com/signup
   - type: TermsOfService
     url: https://developers.google.com/terms
   - type: PrivacyPolicy
     url: https://policies.google.com/privacy
   - type: StatusPage
-    url: https://status.cloud.google.com/
-  - type: Support
-    url: https://developers.google.com/sites/api/support
-  - type: Blog
-    url: https://developers.googleblog.com
+    url: https://www.google.com/appsstatus/dashboard/
+  - type: Deprecation
+    url: lifecycle/google-sites-lifecycle.yml
+  - type: Lifecycle
+    url: lifecycle/google-sites-lifecycle.yml
+  - type: Authentication
+    url: authentication/google-sites-authentication.yml
+  - type: OAuthScopes
+    url: scopes/google-sites-scopes.yml
+  - type: Conventions
+    url: conventions/google-sites-conventions.yml
+  - type: DataModel
+    url: data-model/google-sites-data-model.yml
+  - type: ErrorCatalog
+    url: errors/google-sites-problem-types.yml
+  - type: Conformance
+    url: conformance/google-sites-conformance.yml
+  - type: Compliance
+    url: conformance/google-sites-conformance.yml
+  - type: Packages
+    url: packages/google-sites-packages.yml
+  - type: SDKs
+    url: packages/google-sites-packages.yml
+  - type: ChangeLog
+    url: changelog/google-sites-changelog.yml
+  - type: Plans
+    url: plans/google-sites-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/google-sites-rate-limits.yml
+  - type: FinOps
+    url: finops/google-sites-finops.yml
+  - type: WellKnown
+    url: well-known/google-sites-well-known.yml
+  - type: SecurityTxt
+    url: well-known/google-sites-security.txt
+  - type: LLMsTxt
+    url: llms/google-sites-llms.txt
+  - type: Security
+    url: security/google-sites-vulnerability-disclosure.yml
+  - type: VulnerabilityDisclosure
+    url: security/google-sites-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/google-sites-domain-security.yml
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
+x-enrichment:
+  date: '2026-09-12'
+  status: enriched
+  artifacts_added: 14
+  pass: local-v3
+  notes: >-
+    Contract discovery (STEP 0b) run in full. The Google Sites Data API publishes NO
+    OpenAPI: it is absent from Google's own discovery directory (530 services returned by
+    https://www.googleapis.com/discovery/v1/apis on 2026-09-12, none named `sites`), and
+    https://www.googleapis.com/discovery/v1/apis/sites/v1/rest returns 404. The apis.yml
+    baseURL https://sites.googleapis.com and the OpenAPI pointer
+    https://sites.googleapis.com/$discovery/rest?version=v1 were both WRONG and were
+    corrected/removed: that host answers 403 PERMISSION_DENIED to anonymous callers and
+    serves no public discovery document. The documented contract is the GData v1.4
+    Atom/XML feed surface at https://sites.google.com/feeds/, and the API is DEPRECATED,
+    classic-Sites-only. No GraphQL, no MCP server, no A2A agent card, no AsyncAPI, no
+    gRPC, no WSDL, no llms.txt, no OGC surface.
+x-parent: google
+x-relationship: product

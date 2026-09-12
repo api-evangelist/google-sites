@@ -1,0 +1,75 @@
+generated: '2026-09-12'
+method: searched
+source: >-
+  https://developers.google.com/workspace/sites and
+  https://developers.google.com/workspace/sites/docs/1.0/developers_guide_protocol
+status: deprecated
+headline: >-
+  The Google Sites Data API is DEPRECATED and can reach only classic Google Sites. It
+  cannot touch the rebuilt Google Sites that launched 2016-11-22, which is the only
+  version a user can create today.
+deprecation:
+  deprecated: true
+  policy_url: https://developers.google.com/workspace/sites
+  announcement: >-
+    Banner carried on every page of the Google Sites developer documentation:
+    "Deprecated: Sites API is deprecated and might stop working at any time. Sites API
+    can only access classic Sites. Sites API can't access the rebuilt version of Sites
+    that was launched on November 22, 2016."
+  sunset_date: null
+  sunset_note: >-
+    No sunset date is published. Google states only that the API "might stop working at
+    any time" - which gives an integrator no window to plan against.
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  successor: null
+  successor_note: >-
+    There is no successor API. Google publishes no REST API for the rebuilt (new)
+    Google Sites. The Apps Script classic Sites service was separately deprecated on
+    2023-09-19 with the note "There isn't a way to connect to new Sites with Apps
+    Script." The nearest programmatic surfaces for new Sites are indirect: Google Drive
+    API (a Site is a Drive file) and the Admin SDK Reports API usage report.
+versioning:
+  scheme: gdata-version-header
+  current: '1.4'
+  mechanism: >-
+    Every request should carry the HTTP header "GData-Version: 1.4". Where headers
+    cannot be set, "v=1.4" may be supplied as a query parameter, though the header is
+    preferred. Client libraries set it automatically.
+  versions_supported:
+    - '1.4'
+  url_versioning: false
+  note: >-
+    The developer guide states "There is a single supported version of the Sites Data
+    API."
+status_page:
+  url: https://www.google.com/appsstatus/dashboard/
+  name: Google Workspace Status Dashboard
+  covers_product: true
+  note: >-
+    Google Sites is an explicitly listed service on the Google Workspace Status
+    Dashboard (verified in the live service list 2026-09-12). The dashboard covers the
+    Sites product; there is no separate status surface for the Data API.
+  history: https://www.google.com/appsstatus/dashboard/summary
+sla:
+  published: true
+  url: https://workspace.google.com/intl/en/terms/sla.html
+  note: >-
+    Covered by the Google Workspace Service Level Agreement, which applies to the
+    Workspace subscription that includes Google Sites, not to the deprecated Data API
+    specifically.
+terms:
+  api_terms: https://developers.google.com/terms
+  product_terms: https://workspace.google.com/intl/en/terms/premier_terms/
+support:
+  url: https://developers.google.com/workspace/sites/support
+  channels:
+    - Google Workspace Developers community forum
+    - "Stack Overflow tag [google-sites]"
+    - Google Workspace admin email support
+client_library_decay:
+  note: >-
+    See packages/google-sites-packages.yml. The only two first-party clients last
+    shipped in 2013 (PyPI gdata 2.0.18) and 2012 (Maven com.google.gdata:core 1.47.1),
+    and both source repositories are archived.

@@ -1,0 +1,142 @@
+generated: '2026-09-12'
+method: searched
+source: >-
+  https://developers.google.com/workspace/sites/docs/1.0/developers_guide_protocol,
+  https://developers.google.com/workspace/sites/docs/1.0/reference,
+  https://cloud.google.com/security/compliance/iso-27001,
+  https://cloud.google.com/security/compliance/soc-2
+note: >-
+  Standards this API declares in its own contract and documentation. The Sites Data
+  API is a Google Data (GData) v1.4 service, so its conformance profile is the
+  Atom/AtomPub/OpenSearch stack rather than the OpenAPI/JSON stack. Entries marked
+  conforms:false are measured absences, not penalties.
+conformance:
+  - id: oauth2
+    name: OAuth 2.0 (RFC 6749)
+    conforms: true
+    evidence: >-
+      "Your application must use OAuth 2.0 to authorize requests. No other
+      authorization protocols are supported." Authorization server metadata confirmed
+      live at https://accounts.google.com/.well-known/oauth-authorization-server
+      (HTTP 200, saved to well-known/).
+    source: https://developers.google.com/workspace/sites/docs/1.0/developers_guide_protocol
+  - id: oauth2-pkce
+    name: PKCE (RFC 7636)
+    conforms: true
+    evidence: >-
+      code_challenge_methods_supported ["plain","S256"] in the live authorization
+      server metadata saved at
+      well-known/google-sites-oauth-authorization-server.json.
+    source: https://accounts.google.com/.well-known/oauth-authorization-server
+  - id: oidc
+    name: OpenID Connect Discovery 1.0
+    conforms: true
+    scope: authorization-server
+    evidence: >-
+      https://accounts.google.com/.well-known/openid-configuration returns HTTP 200
+      with issuer https://accounts.google.com. The Sites Data API itself is
+      OAuth-2-authorized only; OIDC applies to the identity layer of the same
+      authorization server.
+    source: https://accounts.google.com/.well-known/openid-configuration
+  - id: atom
+    name: Atom Syndication Format (RFC 4287)
+    conforms: true
+    evidence: >-
+      Every feed and entry is served in the http://www.w3.org/2005/Atom namespace with
+      Atom id/title/updated/link/author/category/content elements, as shown throughout
+      the reference and protocol guides.
+    source: https://developers.google.com/workspace/sites/docs/1.0/reference
+  - id: atompub
+    name: Atom Publishing Protocol (RFC 5023)
+    conforms: true
+    evidence: >-
+      Writes are AtomPub - POST to a collection feed to create, PUT to an entry's
+      rel="edit" link to update, DELETE to the same link to remove, and
+      app:edited (http://www.w3.org/2007/app) on entries.
+    source: https://developers.google.com/workspace/sites/docs/1.0/developers_guide_protocol
+  - id: opensearch
+    name: OpenSearch 1.1 response elements
+    conforms: true
+    evidence: >-
+      Feeds carry openSearch:startIndex in the
+      http://a9.com/-/spec/opensearch/1.1/ namespace and page via
+      start-index / max-results.
+    source: https://developers.google.com/workspace/sites/docs/1.0/reference
+  - id: gdata
+    name: Google Data APIs protocol v1.4
+    conforms: true
+    evidence: >-
+      "Every request that you [send] to the Google Sites Data API should specify a
+      version of 1.4 ... GData-Version: 1.4".
+    source: https://developers.google.com/workspace/sites/docs/1.0/developers_guide_protocol
+  - id: http-conditional-requests
+    name: HTTP conditional requests (RFC 7232 / ETag)
+    conforms: true
+    evidence: >-
+      gd:etag on every feed and entry; If-Match on write, If-None-Match on read, with
+      304 Not Modified and 412 Precondition Failed responses.
+    source: https://developers.google.com/workspace/sites/docs/1.0/developers_guide_protocol
+  - id: openapi
+    name: OpenAPI
+    conforms: false
+    evidence: >-
+      No OpenAPI or Swagger document is published. The API is absent from Google's own
+      discovery directory (https://www.googleapis.com/discovery/v1/apis returned 530
+      services on 2026-09-12; none is `sites`), and
+      https://www.googleapis.com/discovery/v1/apis/sites/v1/rest returns HTTP 404.
+  - id: rfc9457
+    name: Problem Details for HTTP APIs (RFC 9457)
+    conforms: false
+    evidence: No application/problem+json envelope; errors follow the GData XML error model.
+  - id: json-api
+    name: 'JSON:API'
+    conforms: false
+    evidence: The API serves Atom XML only; no JSON representation is offered.
+  - id: odata
+    name: OData
+    conforms: false
+    evidence: No $metadata surface and no OData query grammar.
+  - id: asyncapi
+    name: AsyncAPI
+    conforms: false
+    evidence: >-
+      No event, streaming or webhook surface exists. The Activity feed is a pollable
+      Atom change log, not a push channel.
+  - id: rfc8594
+    name: Sunset HTTP header (RFC 8594)
+    conforms: false
+    evidence: >-
+      The API is deprecated but signals it only in an HTML documentation banner - no
+      Sunset or Deprecation response header, and no sunset date at all.
+  - id: rfc9116
+    name: security.txt (RFC 9116)
+    conforms: true
+    scope: organization
+    evidence: >-
+      https://google.com/.well-known/security.txt returns HTTP 200 with Contact,
+      Policy, Encryption, Acknowledgments and Expires fields. Saved verbatim to
+      well-known/google-sites-security.txt.
+domain_standard:
+  applicable: false
+  note: >-
+    Website building / CMS has no cross-vendor domain standard of the kind the
+    domain_standard_conformance check rewards (no SCIM URN, OData $metadata, OpenRTB,
+    Sparkplug, ActivityPub, LTI/OneRoster, OAI-PMH, HL7/X12/ISO-20022 equivalent).
+    REWARD-ONLY check, correctly left empty rather than filled.
+compliance:
+  published: true
+  program_url: https://cloud.google.com/security/compliance/offerings
+  certifications:
+    - name: ISO/IEC 27001
+      scope: Google Workspace
+      evidence: >-
+        "Google Cloud, Google Workspace, and Apigee ISO/IEC 27001 certificates may be
+        requested using the Compliance Reports Manager."
+      source: https://cloud.google.com/security/compliance/iso-27001
+    - name: SOC 2
+      scope: Google Workspace
+      source: https://cloud.google.com/security/compliance/soc-2
+  note: >-
+    Compliance is published at the Google Workspace / Google Cloud level, which is the
+    subscription that includes Google Sites. There is no Sites-specific attestation and
+    none is expected - certification scopes are drawn per service family, not per API.

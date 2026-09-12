@@ -1,0 +1,68 @@
+generated: '2026-09-12'
+method: searched
+source: https://developers.google.com/workspace/sites/docs/1.0/developers_guide_protocol
+docs: https://developers.google.com/workspace/sites/docs/1.0/developers_guide_protocol
+note: >-
+  Authored from the Google Sites Data API protocol guide, not derived from a spec -
+  this API publishes no OpenAPI or discovery document, so there are no securitySchemes
+  to read. The guide is explicit: "Your application must use OAuth 2.0 to authorize
+  requests. No other authorization protocols are supported."
+schemes:
+  - id: oauth2
+    type: oauth2
+    flows:
+      - authorizationCode
+    authorization_endpoint: https://accounts.google.com/o/oauth2/v2/auth
+    token_endpoint: https://oauth2.googleapis.com/token
+    revocation_endpoint: https://oauth2.googleapis.com/revoke
+    issuer: https://accounts.google.com
+    pkce: true
+    pkce_methods:
+      - plain
+      - S256
+    discovery: well-known/google-sites-openid-configuration.json
+    scopes:
+      - https://sites.google.com/feeds/
+    registration: >-
+      Register the application in the Google API Console to obtain a client ID and
+      client secret, then activate the Google Sites Data API for the project.
+    consent: >-
+      Google shows the user a consent screen for the requested scope; approval returns
+      a short-lived access token. Refresh tokens are used to mint new access tokens.
+    transport: Authorization request header
+    note: >-
+      Endpoint and PKCE values confirmed against the live OAuth 2.0 / OIDC discovery
+      documents saved at well-known/ (accounts.google.com), fetched 2026-09-12.
+retired_schemes:
+  - id: oauth1
+    type: oauth1
+    status: removed
+    removed: '2012-04-20'
+    note: >-
+      OAuth 1.0 is documented in the Python and Java guides but both pages carry the
+      banner "The auth options described in this document (OAuth 1.0, AuthSub, and
+      ClientLogin) have been officially deprecated as of April 20, 2012 and are no
+      longer available."
+  - id: authsub
+    type: proprietary
+    status: removed
+    removed: '2012-04-20'
+  - id: clientlogin
+    type: proprietary
+    status: removed
+    removed: '2012-04-20'
+anonymous_access:
+  supported: partial
+  note: >-
+    The Content feed "may or may not require authentication, depending on the Site's
+    (published) settings". The Activity, Revision, Site and ACL feeds state that all
+    requests must be authenticated.
+api_keys:
+  supported: false
+  note: >-
+    No API-key scheme is documented for the sites.google.com/feeds surface. (The
+    unrelated sites.googleapis.com host returns HTTP 403 "Method doesn't allow
+    unregistered callers" to anonymous callers, but publishes no discovery document
+    and is not the API this record documents.)
+mutual_tls:
+  supported: false

@@ -1,0 +1,40 @@
+generated: '2026-09-12'
+method: searched
+source: https://developers.google.com/workspace/release-notes
+docs: https://developers.google.com/workspace/release-notes
+feed: https://developers.google.com/feeds/workspace-release-notes.xml
+scheme: dated-entries
+note: >-
+  Google Sites has NO API-specific changelog. It shares the Google Workspace developer
+  release notes, a dated, per-product feed covering every Workspace developer surface.
+  Searching that page for Sites entries on 2026-09-12 found exactly two substantive
+  items across its whole history - both about the classic-to-new Sites transition,
+  neither a change to the Sites Data API itself. The Sites Data API's own version has
+  been frozen at GData 1.4 with "a single supported version"; nothing has shipped to it
+  in the release notes window.
+current_version: '1.4'
+product_specific: false
+entries:
+  - date: '2023-09-19'
+    product: Google Apps Script
+    type: deprecated
+    breaking: true
+    summary: >-
+      "The classic Google Sites service has been deprecated due to the transition from
+      classic Sites to new Sites. There isn't a way to connect to new Sites with Apps
+      Script."
+    source: https://developers.google.com/workspace/release-notes
+  - date: '2014-11-20'
+    product: Google Workspace Admin SDK
+    type: feature
+    breaking: false
+    summary: >-
+      Reports API added the Google Sites customer usage report to
+      customerUsageReports.get, letting admins view Google Sites usage across a domain.
+      This is the Admin SDK, not the Sites Data API.
+    source: https://developers.google.com/workspace/release-notes
+gaps:
+  - >-
+    No changelog entry has ever announced the Sites Data API deprecation. It is
+    communicated only as an HTML banner on the documentation, with no date and no
+    sunset.

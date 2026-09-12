@@ -1,0 +1,33 @@
+generated: '2026-09-12'
+method: searched
+source: https://developers.google.com/workspace/sites/docs/1.0/developers_guide_protocol
+docs: https://developers.google.com/workspace/sites/docs/1.0/developers_guide_protocol
+note: >-
+  Authored from the API's own protocol guide, not derived - there is no OpenAPI or
+  discovery document to read oauth2 securitySchemes from. The guide states a single
+  scope for the whole API: "Here's the OAuth 2.0 scope information for the Google
+  Sites Data API: https://sites.google.com/feeds/". The Sites Data API predates the
+  granular per-method scopes Google ships on its modern Workspace APIs; one coarse
+  scope grants read AND write across all five feeds.
+granularity: coarse
+scope_count: 1
+scopes:
+  - name: https://sites.google.com/feeds/
+    description: >-
+      Full access to the Google Sites Data API. Grants read and write across the Site,
+      Content, Revision, Activity and ACL feeds for classic Google Sites the user owns
+      or can view, including creating and copying sites on a Google Workspace domain,
+      uploading and downloading attachments, and modifying sharing permissions.
+    read: true
+    write: true
+    sensitive: true
+    feeds:
+      - site
+      - content
+      - revision
+      - activity
+      - acl
+gaps:
+  - >-
+    No read-only variant is published. An agent that only needs to list sites or read
+    content must still be granted a scope that can delete pages and change ACLs.
