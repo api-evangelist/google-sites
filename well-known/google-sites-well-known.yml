@@ -1,165 +1,160 @@
 generated: '2026-09-12'
 method: probed
 source: live GET of the named /.well-known/ path list on every host this record knows
-note: >-
-  Probed the registrable domain (google.com + www), the docs host (developers.google.com),
-  the documented API host (sites.google.com), the host named in apis.yml baseURL
-  (sites.googleapis.com), the product host (workspace.google.com), and the OAuth 2.0
-  authorization server the Sites Data API protocol guide sends callers to
-  (accounts.google.com). Real documents were returned by google.com / www.google.com
-  (RFC 9116 security.txt) and by accounts.google.com (OIDC discovery + OAuth 2.0
-  authorization-server metadata). sites.google.com is a single-page application whose
-  catch-all answers HTTP 200 with a ~1.2 MB HTML shell for EVERY /.well-known/* path -
-  those are recorded as shell, not as documents, and earn no credit.
+note: Probed the registrable domain (google.com + www), the docs host (developers.google.com), the documented
+  API host (sites.google.com), the host named in apis.yml baseURL (sites.googleapis.com), the product
+  host (workspace.google.com), and the OAuth 2.0 authorization server the Sites Data API protocol guide
+  sends callers to (accounts.google.com). Real documents were returned by google.com / www.google.com
+  (RFC 9116 security.txt) and by accounts.google.com (OIDC discovery + OAuth 2.0 authorization-server
+  metadata). sites.google.com is a single-page application whose catch-all answers HTTP 200 with a ~1.2
+  MB HTML shell for EVERY /.well-known/* path - those are recorded as shell, not as documents, and earn
+  no credit.
 hosts:
-  - host: google.com
-    documents:
-      - path: /.well-known/security.txt
-        status: 200
-        file: well-known/google-sites-security.txt
-      - path: /.well-known/openid-configuration
-        status: 404
-      - path: /.well-known/oauth-authorization-server
-        status: 404
-      - path: /.well-known/api-catalog
-        status: 404
-      - path: /.well-known/ai-plugin.json
-        status: 404
-      - path: /.well-known/agent-card.json
-        status: 404
-      - path: /.well-known/agent.json
-        status: 404
-  - host: www.google.com
-    documents:
-      - path: /.well-known/security.txt
-        status: 200
-        file: well-known/google-sites-security.txt
-      - path: /.well-known/openid-configuration
-        status: 404
-      - path: /.well-known/oauth-authorization-server
-        status: 404
-      - path: /.well-known/api-catalog
-        status: 404
-      - path: /.well-known/ai-plugin.json
-        status: 404
-      - path: /.well-known/agent-card.json
-        status: 404
-      - path: /.well-known/agent.json
-        status: 404
-  - host: accounts.google.com
-    note: >-
-      The OAuth 2.0 authorization server for the Google Sites Data API scope
-      https://sites.google.com/feeds/ - named by the API's own protocol guide.
-    documents:
-      - path: /.well-known/openid-configuration
-        status: 200
-        file: well-known/google-sites-openid-configuration.json
-      - path: /.well-known/oauth-authorization-server
-        status: 200
-        file: well-known/google-sites-oauth-authorization-server.json
-      - path: /.well-known/security.txt
-        status: 404
-      - path: /.well-known/api-catalog
-        status: 404
-      - path: /.well-known/ai-plugin.json
-        status: 404
-      - path: /.well-known/agent-card.json
-        status: 404
-      - path: /.well-known/agent.json
-        status: 404
-  - host: developers.google.com
-    documents:
-      - path: /.well-known/security.txt
-        status: 404
-      - path: /.well-known/openid-configuration
-        status: 404
-      - path: /.well-known/oauth-authorization-server
-        status: 404
-      - path: /.well-known/api-catalog
-        status: 404
-      - path: /.well-known/ai-plugin.json
-        status: 404
-      - path: /.well-known/agent-card.json
-        status: 404
-      - path: /.well-known/agent.json
-        status: 404
-  - host: sites.google.com
-    note: >-
-      SPA catch-all. Every path below returned HTTP 200 with the same ~1.2 MB
-      text/html Google Sites application shell, not a document. Treated as a miss.
-    documents:
-      - path: /.well-known/security.txt
-        status: 200
-        result: html-shell
-      - path: /.well-known/openid-configuration
-        status: 200
-        result: html-shell
-      - path: /.well-known/oauth-authorization-server
-        status: 200
-        result: html-shell
-      - path: /.well-known/api-catalog
-        status: 200
-        result: html-shell
-      - path: /.well-known/ai-plugin.json
-        status: 200
-        result: html-shell
-      - path: /.well-known/agent-card.json
-        status: 200
-        result: html-shell
-      - path: /.well-known/agent.json
-        status: 200
-        result: html-shell
-  - host: sites.googleapis.com
-    documents:
-      - path: /.well-known/security.txt
-        status: 404
-      - path: /.well-known/openid-configuration
-        status: 404
-      - path: /.well-known/oauth-authorization-server
-        status: 404
-      - path: /.well-known/api-catalog
-        status: 404
-      - path: /.well-known/ai-plugin.json
-        status: 404
-      - path: /.well-known/agent-card.json
-        status: 404
-      - path: /.well-known/agent.json
-        status: 404
-  - host: workspace.google.com
-    documents:
-      - path: /.well-known/security.txt
-        status: 404
-      - path: /.well-known/openid-configuration
-        status: 404
-      - path: /.well-known/oauth-authorization-server
-        status: 404
-      - path: /.well-known/api-catalog
-        status: 404
-      - path: /.well-known/ai-plugin.json
-        status: 404
-      - path: /.well-known/agent-card.json
-        status: 404
-      - path: /.well-known/agent.json
-        status: 404
-  - host: www.googleapis.com
-    documents:
-      - path: /.well-known/security.txt
-        status: 404
-      - path: /.well-known/openid-configuration
-        status: 404
-      - path: /.well-known/oauth-authorization-server
-        status: 404
-      - path: /.well-known/api-catalog
-        status: 404
-      - path: /.well-known/ai-plugin.json
-        status: 404
-      - path: /.well-known/agent-card.json
-        status: 404
-      - path: /.well-known/agent.json
-        status: 404
+- host: google.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    file: google-sites-security.txt
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: www.google.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    file: google-sites-security.txt
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: accounts.google.com
+  note: The OAuth 2.0 authorization server for the Google Sites Data API scope https://sites.google.com/feeds/
+    - named by the API's own protocol guide.
+  documents:
+  - path: /.well-known/openid-configuration
+    status: 200
+    file: google-sites-openid-configuration.json
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: google-sites-oauth-authorization-server.json
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: developers.google.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: sites.google.com
+  note: SPA catch-all. Every path below returned HTTP 200 with the same ~1.2 MB text/html Google Sites
+    application shell, not a document. Treated as a miss.
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    result: html-shell
+  - path: /.well-known/openid-configuration
+    status: 200
+    result: html-shell
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    result: html-shell
+  - path: /.well-known/api-catalog
+    status: 200
+    result: html-shell
+  - path: /.well-known/ai-plugin.json
+    status: 200
+    result: html-shell
+  - path: /.well-known/agent-card.json
+    status: 200
+    result: html-shell
+  - path: /.well-known/agent.json
+    status: 200
+    result: html-shell
+- host: sites.googleapis.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: workspace.google.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: www.googleapis.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
 agent_card:
   found: false
-  note: >-
-    No A2A agent card. Both /.well-known/agent-card.json and the pre-0.3
-    /.well-known/agent.json 404 on every host except the sites.google.com SPA
-    catch-all, whose 200 is the HTML application shell. No a2a/ artifact written.
+  note: No A2A agent card. Both /.well-known/agent-card.json and the pre-0.3 /.well-known/agent.json 404
+    on every host except the sites.google.com SPA catch-all, whose 200 is the HTML application shell.
+    No a2a/ artifact written.
