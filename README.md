@@ -1,4 +1,4 @@
-# Google Sites API (google-sites)
+# Google Sites
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,46 +64,128 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-API for creating and managing Google Sites
+Google Sites is Google's no-code website builder, bundled with Google Workspace and available at no cost to consumer Google Accounts. Its only public programmatic surface is the Google Sites Data API, a Google Data (GData) v1.4 Atom/XML API served from https://sites.google.com/feeds/ across five feeds — Site, Content, Revision, Activity and ACL — that list and create sites, read and write pages, announcements, file cabinets, list pages and attachments, walk revision history and activity, and manage sharing permissions. Google marks the API DEPRECATED on every documentation page and states it "might stop working at any time"; critically, it reaches only classic Google Sites and cannot touch the rebuilt Sites launched on 2016-11-22, which is the only version a user can create today. Google publishes no OpenAPI or discovery document for it, no replacement API for new Sites, no webhooks, no rate limits and no MCP server. Authorization is OAuth 2.0 with one coarse read-and-write scope. The two first-party client libraries are the generic GData Python and Java libraries, both archived, last published in 2013 and 2012.
 
-**URL:** [Visit APIs.json URL](https://developers.google.com/sites)
+**Areas:** Collaboration · Content Management · Google Workspace · Websites · Website Builder · CMS · Publishing · Productivity · Deprecated APIs · GData
 
-## Timestamps
+## Google Sites on APIs.io
 
-- **Created:** 2024 
-- **Modified:** 2024 
+Everything profiled for Google Sites is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/google-sites/](https://apis.io/providers/google-sites/)** — or go straight to one of the APIs or properties below.
 
-## APIs
+### APIs (1)
 
-### Google Sites API
-The Google Sites API allows developers to programmatically access and manage Google Sites content, including pages, lists, and attachments
+- [Google Sites Data API](https://apis.io/apis/google-sites/google-sites-data-api/) — The Google Sites Data API is a Google Data (GData) v1.4 Atom/XML API for classic Google Sites. Five feeds — Site, Content, Revision, Activity and ACL — let…
 
-**Human URL:** [https://developers.google.com/sites](https://developers.google.com/sites)
+### Published properties
 
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-#### Tags:
+#### MCP servers (1)
 
- - websites, content management, collaboration, google workspace
+Model Context Protocol servers that expose the API to agents.
 
-#### Properties
+- [google-sites-mcp.yml](https://apis.io/servers/google-sites/google-sites-mcp-yml/)
 
-- [X-documentation](https://developers.google.com/sites/api/reference/rest)
-- [X-openapi](https://sites.googleapis.com/$discovery/rest?version=v1)
-- [X-authentication](https://developers.google.com/sites/api/guides/authentication)
-- [X-rate-limits](https://developers.google.com/sites/api/limits)
-- [X-terms-of-service](https://developers.google.com/terms)
-- [X-support](https://developers.google.com/sites/api/support)
-- [X-api-console](https://console.cloud.google.com/apis/library/sites.googleapis.com)
+#### Security (3)
 
-## Common Properties
+Authentication, trust centre, and vulnerability disclosure.
 
-- [X-portal](https://developers.google.com)
-- [X-privacy-policy](https://policies.google.com/privacy)
-- [X-status](https://status.cloud.google.com)
-- [X-blog](https://developers.googleblog.com)
+- [Google Sites Authentication](https://apis.io/security/google-sites/google-sites-authentication/)
+- [Google Sites Domain Security](https://apis.io/security/google-sites/google-sites-domain-security/)
+- [Google Sites Vulnerability Disclosure](https://apis.io/security/google-sites/google-sites-vulnerability-disclosure/)
 
-## Maintainers
+#### OAuth scopes (1)
 
-**FN:** Google
+The permissions the API asks for.
 
-**Email:** support@google.com
+- [Google Sites Scopes](https://apis.io/scopes/google-sites/google-sites-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Google Sites Plans Pricing](https://apis.io/plans/google-sites/google-sites-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Google Sites Rate Limits](https://apis.io/rate-limits/google-sites/google-sites-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Google Sites Finops](https://apis.io/finops/google-sites/google-sites-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.google.com/)
+- [Documentation](https://developers.google.com/workspace/sites/docs/developers_guide)
+- [Getting started](https://developers.google.com/workspace/guides/get-started)
+- [API reference](https://developers.google.com/workspace/sites/docs/1.0/reference)
+- [Pricing](https://workspace.google.com/pricing)
+- [Sign up](https://accounts.google.com/signup)
+- [Support](https://developers.google.com/workspace/sites/support)
+- [Blog](https://developers.googleblog.com)
+- [Terms of service](https://developers.google.com/terms)
+- [Privacy policy](https://policies.google.com/privacy)
+- [GitHub](https://github.com/googleworkspace)
+- [Status](https://www.google.com/appsstatus/dashboard/)
+
+## API Evangelist rating
+
+**Kin Score 51.3** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 80.4 |
+| Contract quality | 0.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 52.6 |
+| Developer ergonomics | 64.3 |
+| Access clarity | 84.2 |
+
+**Agent readiness 16.2** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | na |
+
+**Regulatory alignment 45.1** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/google-sites/](https://apis.io/providers/google-sites/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Google Sites: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/google-sites/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
