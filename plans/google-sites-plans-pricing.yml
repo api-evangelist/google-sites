@@ -1,0 +1,96 @@
+# Pricing transcribed from the provider's own page — see provenance. Numbers are quoted, not derived.
+generated: '2026-10-28'
+method: searched
+source: https://workspace.google.com/pricing
+sources:
+- https://workspace.google.com/pricing
+provenance:
+  tool: engine/economics/harvest_pricing.py
+  run: 20261028T161713
+  grounding: every price_text was found verbatim in the fetched page text
+audience: business-product
+pricing_basis: per-seat
+delivery:
+  delivery: managed
+  method: page
+  read: '2026-10-28'
+  managed_tier: Starter
+published: true
+note: Google Workspace plan comparison page; per-user/month USD pricing with 50% off first 3 months promo
+  and annual commitment option. Enterprise tier is quote-only.
+plan_count: 4
+currency: USD
+plans:
+- name: Starter
+  price_text: $7 ** / user per month
+  price: 7
+  currency: USD
+  period: month
+  unit: user
+  included_quota: 30 GB pooled storage per person; business email; Gemini AI assistant in Gmail; video
+    meetings 100 participants
+- name: Standard
+  price_text: $14 ** / user per month
+  price: 14
+  currency: USD
+  period: month
+  unit: user
+  included_quota: 2 TB storage; Gemini in Gmail, Docs, Meet; video meetings 150 participants with recording;
+    eSignature
+- name: Plus
+  price_text: $22 ** / user per month
+  price: 22
+  currency: USD
+  period: month
+  unit: user
+  included_quota: 5 TB storage; eDiscovery; 500 participants; Vault; Secure LDAP; advanced endpoint management
+- name: Enterprise
+  price_text: Contact sales
+  period: none
+  unit: user
+  included_quota: 5 TB or upgrade for more; S/MIME; 1000 participants; DLP; Cloud Identity Premium
+rate_limit_statements:
+- Generate interactive Audio Overviews with two AI hosts Up to 3 per day
+- Up to 20 per day
+- Starter, Standard, and Plus plans can be purchased for a maximum of 300 users.
+- Meeting length (maximum) 24 hours
+x-canonical:
+  generated: '2026-11-01'
+  vocabulary: engine/economics/plans-canonical.yml
+  models:
+  - seat
+  units:
+  - seat
+  plans:
+  - name: Starter
+    access: other
+    model: seat
+    model_how: derived
+    units:
+    - seat
+    periods:
+    - month
+  - name: Standard
+    access: other
+    model: seat
+    model_how: derived
+    units:
+    - seat
+    periods:
+    - month
+  - name: Plus
+    access: other
+    model: seat
+    model_how: derived
+    units:
+    - seat
+    periods:
+    - month
+  - name: Enterprise
+    access: other
+    model: unstated
+    model_how: derived
+    units:
+    - seat
+    periods:
+    - none
